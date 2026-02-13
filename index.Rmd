@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+I am interested in exploring data related to gender and politics in the United States. Some ideas I had were comparing the amount of women in different levels or in different branches of government, or analyzing public opinion among various groups about women in political leadership positions. These ideas are very broad and would likely include large sets of data, but I hope to narrow them down into a more specific topic that relates to women in politics as I continue to explore what data is out there.
