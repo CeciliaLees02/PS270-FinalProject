@@ -1546,7 +1546,21 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
 <p>I am interested in exploring data related to gender and politics in the United States. Some ideas I had were comparing the amount of women in different levels or in different branches of government, or analyzing public opinion among various groups about women in political leadership positions. These ideas are very broad and would likely include large sets of data, but I hope to narrow them down into a more specific topic that relates to women in politics as I continue to explore what data is out there.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Research question: How do political endorsements affect female political candidates differently from male political candidates in the United States?</p>
+<p>My hypothesis is that political endorsements are more beneficial to female political candidates in winning elections than they are to male political candidates in winning elections. I think this because previous surveys have shown that Americans tend to view women political candidates at being less competent than male candidates. Since women have to face this barrier of public perception that men don’t have to deal with, I think political endorsements will go farther for women because of how it shifts public opinion.</p>
+<p>My explanatory variable is the political endorsements gained by female candidates and the political endorsements gained by male candidates. I will be looking at both political endorsements by influential figures in politics as well as political endorsements by different organizations. This variable will be measured by adding up the total amount of endorsements the candidate received. For my outcome variable of interest, I will look at how far these candidates made it in the race for the position they are running for. This means I will be looking at their outcomes in the primaries or in the runoff elections depending on the situation, and will be measuring their success with a “yes” or “no”.</p>
+<p>In order to support my hypothesis, the data would need to show that female candidates with different levels of endorsements will win more elections on average than male candidates with those same levels of endorsements.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='va'>my_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/utils/read.table.html'>read.csv</a></span><span class='op'>(</span><span class='st'>"https://github.com/fivethirtyeight/data.git"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://pillar.r-lib.org/reference/glimpse.html'>glimpse</a></span><span class='op'>(</span><span class='va'>my_data</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code>Rows: 781
+Columns: 1
+$ X..DOCTYPE.html. &lt;chr&gt; &quot;&lt;html&quot;, &quot;  lang=en&quot;, &quot;  &quot;, &quot;  data-color-m…</code></pre>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

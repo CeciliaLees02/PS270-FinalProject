@@ -20,6 +20,7 @@ My hypothesis is that political endorsements are more beneficial to female polit
 My explanatory variable is the political endorsements gained by female candidates and the political endorsements gained by male candidates. I will be looking at both political endorsements by influential figures in politics as well as political endorsements by different organizations. This variable will be measured by adding up the total amount of endorsements the candidate received. For my outcome variable of interest, I will look at how far these candidates made it in the race for the position they are running for. This means I will be looking at their outcomes in the primaries or in the runoff elections depending on the situation, and will be measuring their success with a "yes" or "no".
 
 In order to support my hypothesis, the data would need to show that female candidates with different levels of endorsements will win more elections on average than male candidates with those same levels of endorsements. 
+
 ```{r}
 library(tidyverse)
 my_data <- read.csv("https://github.com/fivethirtyeight/data.git")
