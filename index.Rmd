@@ -7,22 +7,70 @@ output:
     self_contained: false
 ---
 
-
-
 ## Project thoughts
 
-I am interested in exploring data related to gender and politics in the United States. Some ideas I had were comparing the amount of women in different levels or in different branches of government, or analyzing public opinion among various groups about women in political leadership positions. These ideas are very broad and would likely include large sets of data, but I hope to narrow them down into a more specific topic that relates to women in politics as I continue to explore what data is out there.
+I am interested in exploring data related to gender and politics in the United States. Some ideas I had were comparing the amount of women in different levels or in different branches of government, or analyzing public opinion among various groups about women in political leadership positions. These ideas are very broad and would likely include large sets of data, but I hope to narrow them down into a more specific topic that relates to women in politics as I continue to explore what data is out there. I also would be interest in exploring topic related to the environment.
 
-Research question: How do political endorsements affect female political candidates differently from male political candidates in the United States?
+Research question: How does a country's level of democracy affect its Environmental Performance Index (EPI)?
 
-My hypothesis is that political endorsements are more beneficial to female political candidates in winning elections than they are to male political candidates in winning elections. I think this because previous surveys have shown that Americans tend to view women political candidates at being less competent than male candidates. Since women have to face this barrier of public perception that men don't have to deal with, I think political endorsements will go farther for women because of how it shifts public opinion.
+My hypothesis is that countries with higher levels of democracy have a higher EPI. This is because countries with higher levels of democracy have higher levels of public participation, which I think will allow for more attention to be brought to environmental issues. This will then lead to democracies being more likely to enact policies and programs in support of the environment.
 
-My explanatory variable is the political endorsements gained by female candidates and the political endorsements gained by male candidates. I will be looking at both political endorsements by influential figures in politics as well as political endorsements by different organizations. This variable will be measured by adding up the total amount of endorsements the candidate received. For my outcome variable of interest, I will look at how far these candidates made it in the race for the position they are running for. This means I will be looking at their outcomes in the primaries or in the runoff elections depending on the situation, and will be measuring their success with a "yes" or "no".
+My explanatory variable is the democracy rating of each country. The data I use for this variable is produced by the Economist Intelligence Unit (EIU) which ranks countries on a scale from 0 to 10, with 10 being the most democratic. The EIU explains that the democracy index is determined by factors such as the "Extent to which citizens can choose their political leaders in free and fair elections, enjoy civil liberties, prefer democracy over other political systems, can and do participate in politics, and have a functioning government that acts on their behalf".
 
-In order to support my hypothesis, the data would need to show that female candidates with different levels of endorsements will win more elections on average than male candidates with those same levels of endorsements. 
+For my outcome variable of interest I am looking at the EPI of each country. The EPI ranks countries on a scale from 0-100, with 0 being the worst performance and 100 being the best performance. The EPI ranks countries based on "climate change performance, environmental health, and ecosystem vitality". 
+
+In order to support my hypothesis, the data would need to show that countries with higher scores of democracy have higher EPI scores.
+
+
+```{r}
+library(readr)
+library(tidyverse)
+EPI_data <- read_csv("https://epi.yale.edu/downloads/epi2024results.csv")
+```
+
+```{r}
+glimpse(EPI_data)
+```
+
+```{r}
+EPI_data <- EPI_data |> select(iso, country, EPI.new)
+EPI_data
+```
 
 ```{r}
 library(tidyverse)
-my_data <- read.csv("https://github.com/fivethirtyeight/data.git")
-glimpse(my_data)
+democracy_data <- read_csv("~/Downloads/democracy-index-eiu/democracy-index-eiu.csv")
+glimpse(democracy_data)
+```
+
+```{r}
+democracy_data <- democracy_data |> filter(Year==2024)
+democracy_data
+```
+
+```{r}
+library(tidyverse)
+democracy_data <- arrange(democracy_data, `Democracy Index`)
+democracy_data
+```
+
+```{r}
+democracy_data <- democracy_data |> rename(country = Entity)
+democracy_data
+```
+
+```{r}
+combined_data <- inner_join(democracy_data,EPI_data,by = "country")
+combined_data
+```
+
+```{r}
+graph_data <- combined_data |> group_by(`World region according to OWID`) |> summarize(avg_dem_index = mean(`Democracy Index`), avg_EPI_index = mean(EPI.new))
+graph_data
+```
+
+```{r}
+graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_dem_index)) + geom_col() + labs(x = "Continent", y = "Average Democracy Score", title = "Average Democracy Score by World Region")
+
+graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_EPI_index)) + geom_col() + labs(x = "Continent", y = "Average EPI", title = "Average EPI by World Region")
 ```
