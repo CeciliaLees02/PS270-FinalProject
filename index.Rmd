@@ -9,8 +9,6 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to gender and politics in the United States. Some ideas I had were comparing the amount of women in different levels or in different branches of government, or analyzing public opinion among various groups about women in political leadership positions. These ideas are very broad and would likely include large sets of data, but I hope to narrow them down into a more specific topic that relates to women in politics as I continue to explore what data is out there. I also would be interest in exploring topic related to the environment.
-
 Research question: How does a country's level of democracy affect its Environmental Performance Index (EPI)?
 
 My hypothesis is that countries with higher levels of democracy have a higher EPI. This is because countries with higher levels of democracy have higher levels of public participation, which I think will allow for more attention to be brought to environmental issues. This will then lead to democracies being more likely to enact policies and programs in support of the environment.
@@ -74,3 +72,22 @@ graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_dem_index
 
 graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_EPI_index)) + geom_col() + labs(x = "Continent", y = "Average EPI", title = "Average EPI by World Region")
 ```
+
+```{r}
+library(ggplot2)
+data_visualization <- combined_data |> ggplot(aes(x = `Democracy Index`, y = EPI.new)) 
++ geom_point() + geom_smooth(method = "lm", se = FALSE, color="steelblue") + 
+  labs(x = "Democracy Index", y="EPI", title = "Relationship Between Environmental Performance and Level of Democracy")
+data_visualization
+```
+
+```{r}
+fit <- lm(EPI.new ~ `Democracy Index`, data = combined_data)
+fit
+```
+Through this graph and the regression I ran, I am able to start to get an understanding of how the democracy index of a country affects its EPI. Just visualizing the data and adding a line of regression seems to show that there is some level of a positive relationship between democracy and environmental performance. Additionally, the regression I ran estimates that a one point increase in the democracy index is associated with a 3.434 increase in the EPI. The intercept shows the estimated EPI when the democracy index is 0. These results seem to indicate that the two variables I have chosen are correlated with one another. Further analysis will be needed to determine how statistically significant this data is and to determine how well my model fits the data.
+
+
+
+
+
