@@ -75,9 +75,7 @@ graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_EPI_index
 
 ```{r}
 library(ggplot2)
-data_visualization <- combined_data |> ggplot(aes(x = `Democracy Index`, y = EPI.new)) 
-+ geom_point() + geom_smooth(method = "lm", se = FALSE, color="steelblue") + 
-  labs(x = "Democracy Index", y="EPI", title = "Relationship Between Environmental Performance and Level of Democracy")
+data_visualization <- combined_data |> ggplot(aes(x = `Democracy Index`, y = EPI.new)) + geom_point() + geom_smooth(method = "lm", se = FALSE, color="steelblue") + labs(x = "Democracy Index", y="EPI", title = "Relationship Between Environmental Performance and Level of Democracy")
 data_visualization
 ```
 

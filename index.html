@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-10-1.png","index_files/figure-html5/unnamed-chunk-10-2.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-10-1.png","index_files/figure-html5/unnamed-chunk-10-2.png","index_files/figure-html5/unnamed-chunk-11-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1545,7 +1545,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to gender and politics in the United States. Some ideas I had were comparing the amount of women in different levels or in different branches of government, or analyzing public opinion among various groups about women in political leadership positions. These ideas are very broad and would likely include large sets of data, but I hope to narrow them down into a more specific topic that relates to women in politics as I continue to explore what data is out there. I also would be interest in exploring topic related to the environment.</p>
 <p>Research question: How does a country’s level of democracy affect its Environmental Performance Index (EPI)?</p>
 <p>My hypothesis is that countries with higher levels of democracy have a higher EPI. This is because countries with higher levels of democracy have higher levels of public participation, which I think will allow for more attention to be brought to environmental issues. This will then lead to democracies being more likely to enact policies and programs in support of the environment.</p>
 <p>My explanatory variable is the democracy rating of each country. The data I use for this variable is produced by the Economist Intelligence Unit (EIU) which ranks countries on a scale from 0 to 10, with 10 being the most democratic. The EIU explains that the democracy index is determined by factors such as the “Extent to which citizens can choose their political leaders in free and fair elections, enjoy civil liberties, prefer democracy over other political systems, can and do participate in politics, and have a functioning government that acts on their behalf”.</p>
@@ -1859,7 +1858,29 @@ $ `World region according to OWID` &lt;chr&gt; &quot;Asia&quot;, &quot;Asia&quot
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-10-2.png" alt="" width="624" /></p>
 </div>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
+<span><span class='va'>data_visualization</span> <span class='op'>&lt;-</span> <span class='va'>combined_data</span> <span class='op'>|&gt;</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>`Democracy Index`</span>, y <span class='op'>=</span> <span class='va'>EPI.new</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span>, se <span class='op'>=</span> <span class='cn'>FALSE</span>, color<span class='op'>=</span><span class='st'>"steelblue"</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Democracy Index"</span>, y<span class='op'>=</span><span class='st'>"EPI"</span>, title <span class='op'>=</span> <span class='st'>"Relationship Between Environmental Performance and Level of Democracy"</span><span class='op'>)</span></span>
+<span><span class='va'>data_visualization</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-11-1.png" alt="" width="624" /></p>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>fit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>EPI.new</span> <span class='op'>~</span> <span class='va'>`Democracy Index`</span>, data <span class='op'>=</span> <span class='va'>combined_data</span><span class='op'>)</span></span>
+<span><span class='va'>fit</span></span></code></pre>
+</div>
+<pre><code>
+Call:
+lm(formula = EPI.new ~ `Democracy Index`, data = combined_data)
+
+Coefficients:
+      (Intercept)  `Democracy Index`  
+           29.025              3.434  </code></pre>
+</div>
+<p>Through this graph and the regression I ran, I am able to start to get an understanding of how the democracy index of a country affects its EPI. Just visualizing the data and adding a line of regression seems to show that there is some level of a positive relationship between democracy and environmental performance. Additionally, the regression I ran estimates that a one point increase in the democracy index is associated with a 3.434 increase in the EPI. The intercept shows the estimated EPI when the democracy index is 0. These results seem to indicate that the two variables I have chosen are correlated with one another. Further analysis will be needed to determine how statistically significant this data is and to determine how well my model fits the data.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
