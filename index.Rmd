@@ -1,91 +1,119 @@
 ---
-title: "PS270 Final Project"
+title: "The Relationship Between Democracy and Environmental Performance"
 author: "Cecilia Lees"
-description: "My final project"
+description: "PS270 Final Project and Results"
 output:
   distill::distill_article:
     self_contained: false
 ---
 
-## Project thoughts
+## Introduction
 
-Research question: How does a country's level of democracy affect its Environmental Performance Index (EPI)?
+  For my final project, I wanted to explore the relationship between how democratic a country is and dedicated it is to protecting the environment. Thus, my research question is: how does a country's level of democracy affect its Environmental Performance Index (EPI)? My hypothesis is that countries with higher levels of democracy have a higher EPI. This is because countries with higher levels of democracy have higher levels of public participation, which I think will allow for more attention to be brought to environmental issues. This will then lead to democracies being more likely to enact policies and programs in support of the environment. 
 
-My hypothesis is that countries with higher levels of democracy have a higher EPI. This is because countries with higher levels of democracy have higher levels of public participation, which I think will allow for more attention to be brought to environmental issues. This will then lead to democracies being more likely to enact policies and programs in support of the environment.
+## Data Selection
 
-My explanatory variable is the democracy rating of each country. The data I use for this variable is produced by the Economist Intelligence Unit (EIU) which ranks countries on a scale from 0 to 10, with 10 being the most democratic. The EIU explains that the democracy index is determined by factors such as the "Extent to which citizens can choose their political leaders in free and fair elections, enjoy civil liberties, prefer democracy over other political systems, can and do participate in politics, and have a functioning government that acts on their behalf".
-
-For my outcome variable of interest I am looking at the EPI of each country. The EPI ranks countries on a scale from 0-100, with 0 being the worst performance and 100 being the best performance. The EPI ranks countries based on "climate change performance, environmental health, and ecosystem vitality". 
-
-In order to support my hypothesis, the data would need to show that countries with higher scores of democracy have higher EPI scores.
+  My explanatory variable is the democracy rating of each country. The data I use for this variable is produced by the Economist Intelligence Unit (EIU) which ranks countries on a scale from 0 to 10, with 10 being the most democratic and 0 being the least democratic. The EIU explains that the democracy index is determined by factors such as the "Extent to which citizens can choose their political leaders in free and fair elections, enjoy civil liberties, prefer democracy over other political systems, can and do participate in politics, and have a functioning government that acts on their behalf". 
+    For my outcome variable of interest I am looking at the EPI of each country. The EPI ranks countries on a scale from 0-100, with 0 being the worst performance and 100 being the best performance. According to the Environmental Performance Index website, the EPI rates countries based on "climate change performance, environmental health, and ecosystem vitality". 
+    In order to support my hypothesis, the data would need to show that countries with higher scores of democracy have higher EPI scores. To prove my hypothesis, I will conduct a p-value test at the 95% confidence level, and then decide whether or not I can conclude there is a relationship based on those results.
 
 
-```{r}
+```{r, include=FALSE}
 library(readr)
 library(tidyverse)
 EPI_data <- read_csv("https://epi.yale.edu/downloads/epi2024results.csv")
 ```
 
-```{r}
-glimpse(EPI_data)
-```
 
-```{r}
+```{r, include=FALSE}
 EPI_data <- EPI_data |> select(iso, country, EPI.new)
 EPI_data
 ```
 
-```{r}
+```{r, include=FALSE}
 library(tidyverse)
 democracy_data <- read_csv("~/Downloads/democracy-index-eiu/democracy-index-eiu.csv")
 glimpse(democracy_data)
 ```
 
-```{r}
+```{r, include=FALSE}
 democracy_data <- democracy_data |> filter(Year==2024)
 democracy_data
 ```
 
-```{r}
+```{r, include=FALSE}
 library(tidyverse)
 democracy_data <- arrange(democracy_data, `Democracy Index`)
 democracy_data
 ```
 
-```{r}
+```{r, include=FALSE}
 democracy_data <- democracy_data |> rename(country = Entity)
 democracy_data
 ```
 
-```{r}
+```{r, include=FALSE}
 combined_data <- inner_join(democracy_data,EPI_data,by = "country")
 combined_data
 ```
 
-```{r}
+```{r, include=FALSE}
 graph_data <- combined_data |> group_by(`World region according to OWID`) |> summarize(avg_dem_index = mean(`Democracy Index`), avg_EPI_index = mean(EPI.new))
 graph_data
 ```
 
-```{r}
-graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_dem_index)) + geom_col() + labs(x = "Continent", y = "Average Democracy Score", title = "Average Democracy Score by World Region")
+## Visual Displays of the Explanatory and Outcome Variables By World Region
 
-graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_EPI_index)) + geom_col() + labs(x = "Continent", y = "Average EPI", title = "Average EPI by World Region")
+```{r, echo=FALSE}
+graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_dem_index)) + 
+  geom_col() + labs(x = "Continent", y = "Average Democracy Score", 
+                    title = "Average Democracy Score by World Region")
+
+graph_data |> ggplot(aes(x = `World region according to OWID`, y = avg_EPI_index)) + 
+  geom_col() + labs(x = "Continent", y = "Average EPI", title = "Average EPI by World Region")
 ```
 
-```{r}
+## Visualization of the Relationship Between the Explanatory and Outcome Variable and the Regression Line
+
+```{r, echo=FALSE}
 library(ggplot2)
-data_visualization <- combined_data |> ggplot(aes(x = `Democracy Index`, y = EPI.new)) + geom_point() + geom_smooth(method = "lm", se = FALSE, color="steelblue") + labs(x = "Democracy Index", y="EPI", title = "Relationship Between Environmental Performance and Level of Democracy")
+data_visualization <- combined_data |> ggplot(aes(x = `Democracy Index`, y = EPI.new)) + geom_point() + 
+  geom_smooth(method = "lm", se = FALSE, color="steelblue") + 
+  labs(x = "Democracy Index", y="EPI", title = 
+         "Relationship Between Environmental Performance and Level of 
+       Democracy")
 data_visualization
 ```
 
-```{r}
+```{r, include = FALSE}
+library(knitr)
+library(broom)
 fit <- lm(EPI.new ~ `Democracy Index`, data = combined_data)
-fit
+summary(fit)
 ```
-Through this graph and the regression I ran, I am able to start to get an understanding of how the democracy index of a country affects its EPI. Just visualizing the data and adding a line of regression seems to show that there is some level of a positive relationship between democracy and environmental performance. Additionally, the regression I ran estimates that a one point increase in the democracy index is associated with a 3.434 increase in the EPI. The intercept shows the estimated EPI when the democracy index is 0. These results seem to indicate that the two variables I have chosen are correlated with one another. Further analysis will be needed to determine how statistically significant this data is and to determine how well my model fits the data.
+
+```{r, echo=FALSE}
+library(infer)
+test_significance <- summary(fit)
+knitr::kable(tidy(test_significance), 
+             col.names = c("Term", "Estimate", "Standard Error", "T-Value", "P-Value"), digits = 4)
+```
+
+## Results and Analysis
+  
+  The plot "data_visualization" that I created is a point graph where each dot represent a country and where it ranks on the EPI and Democracy Index scaled. Simply looking at the dots points to a possible correlation between these two variables. Additionally, the line that runs through the graph represents the regression of the data. Visually, the line seems to have a somewhat steep, positive slope, which signals some sort of potential correlation.
+  I then ran a regression of the data and labeled it as the term "fit". The first row shows the estimate, standard error, t-value, and p-value for the intercept of the line, while the second row shows the same information for the coefficient of the line. This regression estimates that on average, a one point increase in the democracy index is associated with a 3.434 increase in the EPI. The intercept shows the estimated EPI when the democracy index is 0, which according to the regression I ran is 29.025.
+  I then ran a summary of the regression which is labeled as test_significance. This was to test the significance of the correlation between a country's democracy index and its EPI, and decide whether or not I can prove my hypothesize that countries with higher levels of democracy have a better environmental performance. The summary of the regression showed that the p-value of my experiment was less than 2.2e-16, which means the correlation between the level of democracy and environmental performance is highly significant. Since I wanted to see if the correlation was significant at the 95% confidence level and 2.2e-16 is less than .05, I can conclude there is a relationship between democracy and environmental performance. In terms of causal interpretation, I can conclude that on average, a higher level of democracy is correlated with a higher EPI. 
+  The standard error of the regression I ran is .2918 for the coefficient, which indicates that the estimate of my model varies little across repeated sample. The residual standard error indicates how far the data points fall from the regression line on average. The residual standard error produced by the regression I ran is 8.649, which indicates there is some deviation of what the model predicts and what the actual EPI is.
+  
+
+## Conclusion 
+  
+  Through my visualizations and regression, I found there to be a highly significant relationship between the level of democracy within a country and its environmental performance index, given that my p-value was less than 2.2e-16. The limitations to this analysis is that it can be difficult to quantify more conceptual characteristics such as democracy and environmental performance. This means that while there may be a relationship between the democratic index and environmental performance index that I used, it might not fully capture how democratic or environmentally conscious a country is. Another possible limitation is the fact that this experiment is a cross-sectional examination using data just from 2024 that doesn't look at how changes in democracy over time correlates with changes in EPI over time, which could potentially strengthen my results. Additionally, there could be other confounding variables that are influencing my analysis. One prominent example that I can think of is the economic performance of a country. Some theories point towards strong economies leading toward democracy, and having a stronger economy gives countries more resources to invest in improving environmental standards. If I had more time, I would run tests to account for other variables that could influence a country's EPI. This might include the level of GDP per capita, education, and infrastructure efficiency of a country. Additionally, I would compare data from a larger time frame to see if changes in the democracy index over time is correlated with changes in the EPI over time.
 
 
 
+```{r print-code, ref.label=knitr::all_labels(), echo = TRUE, eval=FALSE}
+```
 
 
