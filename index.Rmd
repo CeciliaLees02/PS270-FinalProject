@@ -92,6 +92,9 @@ fit <- lm(EPI.new ~ `Democracy Index`, data = combined_data)
 summary(fit)
 ```
 
+
+## Regression Table 
+
 ```{r, echo=FALSE}
 library(infer)
 test_significance <- summary(fit)
